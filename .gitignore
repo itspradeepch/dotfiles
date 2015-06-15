@@ -1,0 +1,6 @@
+.vim/bundle/
+.vim/.netrwhist
+.oh-my-zsh/
+*.swp
+*.swo
+*.pyc
