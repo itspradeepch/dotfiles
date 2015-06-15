@@ -1,0 +1,111 @@
+# sets your computer to sleep immediatly
+alias dodo="pmset sleepnow"
+
+# reloads the prompt, usefull to take new modifications into account
+alias reload="source ~/.bash_profile"
+
+# your public ip
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+
+# your local ip
+alias localip="ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'"
+
+# weather from my current location
+alias weather="curl -s 'http://rss.accuweather.com/rss/liveweather_rss.asp?metric=1&locCode=en|us|brooklyn-ny|11215' | sed -n '/Currently:/ s/.*: \(.*\): \([0-9]*\)\([CF]\).*/\2°\3, \1/p'"
+
+#alias touppercase="pbpaste | tr "[:lower:]" "[:upper:]" | pbcopy"
+#alias tolowercase="pbpaste | tr "[:upper:]" "[:lower:]" | pbcopy"
+
+alias rm="rm -i"
+
+# only show dot files
+alias lsh="ls -ld .??*"
+
+# Calculates the gzip compression of a file
+function gzipsize(){
+ 	echo $((`gzip -c $1 | wc -c`/1024))"KB"
+}
+
+# Find files and ignore directories
+function ff(){
+   find . -iname $1 | grep -v .svn | grep -v .sass-cache
+}
+
+# tab completion for ssh hosts
+#if [ -f ~/.ssh/known_hosts ]; then
+#     complete -W "$(echo `cat ~/.ssh/known_hosts | cut -f 1 -d ' ' | sed -e s/,.*//g | uniq | grep -v "\["`;)" ssh
+#fi
+
+# LESS man page colors
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+
+
+function sshKeyGen(){
+echo "What's the name of the Key (no spaced please) ? ";
+read name;
+echo "What's the email associated with it? ";
+read email;
+`ssh-keygen -t rsa -f ~/.ssh/id_rsa_$name -C "$email"`;
+ssh-add ~/.ssh/id_rsa_$name
+pbcopy < ~/.ssh/id_rsa_$name.pub;
+echo "SSH Key copied in your clipboard";
+}
+
+
+# Generates a tree view from the current directory
+function tree(){
+	pwd
+	ls -R | grep ":$" |   \
+	sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+}
+
+
+# cd into the last focused finder window
+function cdfinder(){
+cd "$(osascript -e 'tell application "Finder"' \
+  -e 'set myname to POSIX path of (target of window 1 as alias)' \
+  -e 'end tell' 2>/dev/null)"
+}
+
+#copy output of last command to clipboard
+alias cl="fc -e -|pbcopy"
+
+# top
+alias cpu='top -o cpu'
+alias mem='top -o rsize' # memory
+
+# share history between terminal sessions
+alias he="history -a" # export history
+alias hi="history -n" # import history
+
+# list TODO/FIX lines from the current project
+alias todos="ack -n --nogroup '(TODO|FIX(ME)?):'"
+
+# Desktop Programs
+alias safari="open -a safari"
+alias chrome="open -a google\ chrome"
+alias f='open -a Finder '
+alias fh='open -a Finder .'
+alias textedit='open -a TextEdit'
+
+# Track who is listening to your iTunes music
+alias whotunes='lsof -r 2 -n -P -F n -c iTunes -a -i TCP@`hostname`:3689'
+
+# Flush your dns cache
+alias flush='dscacheutil -flushcache'
+
+# Use Finder's Quick Look on a file (^C or space to close)
+alias ql='qlmanage -p 2>/dev/null'
+
+# Mute/Unmute the system volume. Plays nice with all other volume settings.
+alias mute="osascript -e 'set volume output muted true'"
+alias unmute="osascript -e 'set volume output muted false'"
+
+
