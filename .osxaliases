@@ -86,7 +86,7 @@ alias he="history -a" # export history
 alias hi="history -n" # import history
 
 # list TODO/FIX lines from the current project
-alias todos="ack -n --nogroup '(TODO|FIX(ME)?):'"
+alias todos="ack --nogroup '(TODO|FIX(ME)?):'"
 
 # Desktop Programs
 alias safari="open -a safari"
@@ -108,4 +108,5 @@ alias ql='qlmanage -p 2>/dev/null'
 alias mute="osascript -e 'set volume output muted true'"
 alias unmute="osascript -e 'set volume output muted false'"
 
-
+#count of number of items in the directory
+alias count="ls -l | wc -l"
