@@ -26,3 +26,9 @@ fi
 if [ ! -d ~/.fzf/ ]; then
     git clone https://github.com/junegunn/fzf.git ~/.fzf
 fi
+
+# clone kannan's eclim into eclim folder
+dir=~/dotfiles
+if [ ! -d ${dir}/eclim ]; then
+    git clone https://github.com/itspradeepch/eclim.git ${dir}/eclim
+fi
