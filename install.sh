@@ -29,3 +29,15 @@ for file in $files; do
     echo "Creating symlink to $file in home directory."
     ln -s $dir/.$file ~/.$file
 done
+
+
+# clone kannan's eclim into eclim folder
+function setUpEclim() {
+  if [ ! -d ${dir}/eclim ]; then
+    git clone https://github.com/itspradeepch/eclim.git ${dir}/eclim
+  fi
+
+  echo "Finished setting up eclim"
+}
+
+setUpEclim
