@@ -58,7 +58,7 @@ elseif has('win32') || has('win64')
 else
     let s:autocompleter = 'ycm'
 endif
-let g:is_exuberant = 1
+let g:is_exuberant = 0
 
 " Language plugins
 let g:web_dev_plugins = 1
@@ -81,8 +81,8 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'kris89/vim-multiple-cursors'
 NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'godlygeek/tabular'
-NeoBundle 'tpope/vim-surround'
+NeoBundle 'godlygeek/tabular' "easily make tables
+NeoBundle 'tpope/vim-surround' "manipulate parenthesis
 NeoBundle 'Shougo/vimproc', {
             \ 'build' : {
             \     'windows' : 'make -f make_mingw32.mak',
@@ -95,6 +95,8 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'mileszs/ack.vim'
+NeoBundle 'guns/vim-clojure-static'
+NeoBundle 'kien/rainbow_parentheses.vim'
 
 " Web dev
 if g:web_dev_plugins == 1
@@ -106,6 +108,7 @@ if g:web_dev_plugins == 1
     NeoBundle 'othree/javascript-libraries-syntax.vim'
     NeoBundle 'marijnh/tern_for_vim', { 'build' : { 'others' : 'npm install' }, }
     NeoBundle 'myhere/vim-nodejs-complete'
+    NeoBundle 'briancollins/vim-jst'
     "NeoBundle 'ahayman/vim-nodejs-complete'
 endif
 
@@ -136,8 +139,8 @@ elseif s:autocompleter == 'neo'
 elseif s:autocompleter == 'ycm'
     NeoBundle 'Valloric/YouCompleteMe' , {
                 \ 'build' : {
-                \    'unix' : './install.sh --clang-completer',
-                \    'mac' : './install.sh --clang-completer',
+                \    'unix' : './install.sh',
+                \    'mac' : './install.sh',
                 \    },
                 \ }
     NeoBundle 'SirVer/ultisnips'
@@ -145,7 +148,7 @@ elseif s:autocompleter == 'ycm'
 endif
 
 " Sourceforge
-NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
+"NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
 "
 " scripts from http://vim-scripts.org/vim/scripts.html
 
@@ -170,11 +173,11 @@ set t_Co=256
 " font
 if has("gui_running")
     if has("gui_macvim")
-        set guifont=Inconsolata-dz\ for\ Powerline:h12
+        set guifont=Monaco:h14
     elseif has("gui_win32")
         set guifont=Consolas:h11:cANSI
     elseif has("gui_gtk2")
-        set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 11
+        set guifont=Inconsolata-dz\ for\ Powerline\ 12
     endif
 endif
 
@@ -361,10 +364,19 @@ let g:Tex_MultipleCompileFormats='dvi,pdf'
 
 "---------------------------------------------------------------------------}}}
 " Airline {{{
-let g:airline_powerline_fonts = 1
+"let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#buffer_nr_show = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_powerline_fonts = 0
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_symbols.readonly = ''
+
 
 if has('win32') || has('win64')
     let g:airline_powerline_fonts = 0

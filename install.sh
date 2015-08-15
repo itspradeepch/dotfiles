@@ -5,8 +5,8 @@
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
+#files="vimrc vim vrapperrc dir_colors zshrc tmux.conf linuxaliases osxaliases"    # list of files/folders to symlink in homedir
 files="vimrc vim vrapperrc dir_colors zshrc tmux.conf linuxaliases osxaliases"    # list of files/folders to symlink in homedir
-
 
 function backup() {
 
